@@ -20,6 +20,18 @@ if (require.main === module) {
   main();
 }
 
+/*
+ * Truncates a 32-bit value by setting the most significant 16 bits
+ * to 0s and preserving the least significant 16 bits.
+ *
+ * This only works when n <= 65535 (2^16); otherwise the 32-bit
+ * value is too large, and it cannot be cast as an equivalent 16-bit
+ * value.
+ */
+function uint16 (n) {
+  return n & 0xFFFF;
+}
+
 // Assumptions about each line (aka "instruction") in the input:
 // - There is only one bitwise operator
 // - Each non-NOT bitwise operator is immediately preceded and followed by its operands
@@ -41,19 +53,19 @@ function part1(input) {
         rightOperand = signals[rightOperandString] || parseInt(rightOperandString);
         switch (token) {
           case "AND":
-            result = leftOperand & rightOperand;
+            result = uint16(leftOperand & rightOperand);
             break;
           case "OR":
-            result = leftOperand | rightOperand;
+            result = uint16(leftOperand | rightOperand);
             break;
           case "LSHIFT":
-            result = leftOperand << rightOperand;
+            result = uint16(leftOperand << rightOperand);
             break;
           case "RSHIFT":
-            result = leftOperand >> rightOperand;
+            result = uint16(leftOperand >> rightOperand);
             break;
           case "NOT":
-            result = ~rightOperand;
+            result = uint16(~rightOperand);
             break;
           default:
             throw new Error(`Unrecognized bitwise operator ${token}`);
