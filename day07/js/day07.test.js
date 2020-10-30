@@ -21,7 +21,15 @@ describe("day07", () => {
 
   describe("part1", () => {
     it("should work for example 1", () => {
-      const input = "123 -> x\n456 -> y\nx AND y -> d\nx OR y -> e\nx LSHIFT 2 -> f\ny RSHIFT 2 -> g\nNOT x -> h\nNOT y -> i\n";
+      const input = `
+        123 -> x
+        456 -> y
+        x AND y -> d
+        x OR y -> e
+        x LSHIFT 2 -> f
+        y RSHIFT 2 -> g
+        NOT x -> h
+        NOT y -> i`;
       const expected = {
         d: 72,
         e: 507,
