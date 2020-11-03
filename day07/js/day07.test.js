@@ -1,10 +1,18 @@
 const { expect } = require("chai");
-const { parseInput, part1, part2 } = require("./day07.js");
+const { parseInput, part1 } = require("./day07.js");
 
 describe("day07", () => {
   describe("parseInput", () => {
     it("should work with example input", () => {
-      const input = "123 -> x\n456 -> y\nx AND y -> d\nx OR y -> e\nx LSHIFT 2 -> f\ny RSHIFT 2 -> g\nNOT x -> h\nNOT y -> i\n";
+      const input = `
+        123 -> x
+        456 -> y
+        x AND y -> d
+        x OR y -> e
+        x LSHIFT 2 -> f
+        y RSHIFT 2 -> g
+        NOT x -> h
+        NOT y -> i`;
       const expected = [
         ["123", "->", "x"],
         ["456", "->", "y"],
@@ -16,7 +24,7 @@ describe("day07", () => {
         ["NOT", "y", "->", "i"],
       ];
       expect(parseInput(input)).to.deep.equal(expected);
-    })
+    });
   });
 
   describe("part1", () => {
