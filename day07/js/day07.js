@@ -40,16 +40,16 @@ function parseInput(input) {
   return results;
 }
 
-function part1(input) {
-  const instructions = parseInput(input);
+function part1(instructions) {
+  const instructionsCopy = [...instructions];
   const signals = {};
-  let n = instructions.length - 1;
-  while (instructions.length) {
+  let n = instructionsCopy.length - 1;
+  while (instructionsCopy.length) {
     if (n === -1) {
       // We got to the bottom of the stack, start over at the top
-      n = instructions.length - 1;
+      n = instructionsCopy.length - 1;
     }
-    const instruction = instructions[n];
+    const instruction = instructionsCopy[n];
     const wireID = instruction[instruction.length - 1];
     for (const token of instruction) {
       const index = instruction.indexOf(token);
@@ -106,8 +106,8 @@ function part1(input) {
             throw new Error(`Unrecognized bitwise operator ${token}`);
         }
         signals[wireID] = result;
-        instructions.splice(n, 1);
-        n = instructions.length - 1;
+        instructionsCopy.splice(n, 1);
+        n = instructionsCopy.length - 1;
         break;
       } else if (index === instruction.length - 1) {
         // We got to the end of the instruction, and we didn't encounter a
@@ -125,25 +125,32 @@ function part1(input) {
         }
         result = signals[instruction[0]] || parseInt(instruction[0], 10);
         signals[wireID] = result;
-        instructions.splice(n, 1);
-        n = instructions.length - 1;
+        instructionsCopy.splice(n, 1);
+        n = instructionsCopy.length - 1;
       }
     }
   }
   return signals;
 }
 
-// eslint-disable-next-line no-unused-vars
-function part2(input) {
-  // TODO
+function part2(instructions) {
+  const signalWireA = part1(instructions).a;
+  const modifiedInstructions = instructions.map((instruction) => {
+    if (instruction[instruction.length - 1] !== "b") {
+      return instruction;
+    }
+    return [signalWireA.toString(), "->", "b"];
+  });
+  return part1(modifiedInstructions);
 }
 
 function main() {
   const path = `${__dirname}/../input`;
   const input = fs.readFileSync(path, { encoding: "utf8" });
 
-  console.log("Day 7, part 1: ", part1(input).a); // 3176
-  console.log("Day 7, part 2: ", part2(input));
+  const instructions = parseInput(input);
+  console.log("Day 7, part 1: ", part1(instructions).a); // 3176
+  console.log("Day 7, part 2: ", part2(instructions).a); // 14710
 }
 
 if (require.main === module) {

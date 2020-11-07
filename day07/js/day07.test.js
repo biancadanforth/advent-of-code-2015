@@ -38,6 +38,7 @@ describe("day07", () => {
         y RSHIFT 2 -> g
         NOT x -> h
         NOT y -> i`;
+      const instructions = parseInput(input);
       const expected = {
         d: 72,
         e: 507,
@@ -48,7 +49,7 @@ describe("day07", () => {
         x: 123,
         y: 456,
       };
-      expect(part1(input)).to.deep.equal(expected);
+      expect(part1(instructions)).to.deep.equal(expected);
     });
   });
 
