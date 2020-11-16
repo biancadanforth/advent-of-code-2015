@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2019", // tailor output to Node env
+    "module": "commonjs", // tailor output to Node env
+    "incremental": true,
+    "inlineSources": true, // being able to view original source in browser configs
+    "inlineSourceMap": true, // being able to view original source in browser configs
+    "strict": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    // TODO: Look at the rest of Mythmon's config at:
+    // https://heptapod.host/electric-grey/laserpi-js/-/blob/branch/default/tsconfig.json
+  }
+}
